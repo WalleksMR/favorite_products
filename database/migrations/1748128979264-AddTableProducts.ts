@@ -2,15 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 import { TableName } from '@/infrastructure/database/utils';
 
-export class AddTableClient1748050207585 implements MigrationInterface {
+export class AddTableProducts1748128979264 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: TableName.Client,
+        name: TableName.Product,
         columns: [
           { name: 'id', type: 'uuid', isPrimary: true },
-          { name: 'name', type: 'varchar(128)' },
-          { name: 'email', type: 'varchar(128)', isUnique: true },
+          { name: 'title', type: 'varchar(128)' },
+          { name: 'image', type: 'varchar' },
+          { name: 'price', type: 'int' },
+          { name: 'review', type: 'int', isNullable: true },
           { name: 'createdAt', type: 'timestamptz', default: 'now()' },
           { name: 'updatedAt', type: 'timestamptz', default: 'now()' },
         ],
@@ -19,6 +21,6 @@ export class AddTableClient1748050207585 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable(TableName.Client);
+    await queryRunner.dropTable(TableName.Product);
   }
 }
