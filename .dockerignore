@@ -1,0 +1,14 @@
+node_modules
+.husky
+dist
+temp
+docker
+app
+tests
+.eslint*
+.gitignore
+.lint*
+.pritter*
+docker*
+ecosystem*
+jest*
