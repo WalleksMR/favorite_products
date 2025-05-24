@@ -15,7 +15,7 @@ export class PgProduct {
   @Column()
   review: number | null;
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }
