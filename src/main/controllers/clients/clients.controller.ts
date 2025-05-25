@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import {
@@ -35,6 +35,7 @@ import {
 } from './dto';
 
 @ApiBadRequestResponse({ description: 'Bad Request', example: ErrorExemple })
+@ApiBearerAuth()
 @ApiTags(ClientsController.ROUTE)
 @Controller(ClientsController.ROUTE)
 export class ClientsController {

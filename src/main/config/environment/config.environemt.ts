@@ -31,6 +31,11 @@ class Env {
     maxFavoriteProducts: number;
   };
 
+  public readonly jwt: {
+    secret: string;
+    expiresIn: string;
+  };
+
   constructor() {
     this.database = {
       host: process.env.DB_HOST,
@@ -49,6 +54,11 @@ class Env {
       seeds: this.GetSeeds(),
       node_env: process.env.NODE_ENV,
       maxFavoriteProducts: parseInt(process.env.MAX_FAVORITE_PRODUCTS) || 10,
+    };
+
+    this.jwt = {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRES_IN,
     };
 
     this.path = path;
