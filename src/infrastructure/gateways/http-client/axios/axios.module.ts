@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { AxiosHttpClientService } from './axios.service';
+import { HttpClientAxiosService } from './axios.service';
 
 @Module({
-  providers: [{ provide: 'IHttpClientAxios', useClass: AxiosHttpClientService }],
+  providers: [{ provide: 'IHttpClientAxios', useClass: HttpClientAxiosService }],
   exports: ['IHttpClientAxios'],
 })
-export class AxiosHttpClientModule {}
+export class HttpClientAxiosModule {}

@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { IHttpClient } from '@/domain/contracts/gateways/http-client';
 
 @Injectable()
-export class AxiosHttpClientService implements IHttpClient {
+export class HttpClientAxiosService implements IHttpClient {
   private readonly axiosInstance: AxiosInstance;
 
   constructor() {

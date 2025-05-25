@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { In } from 'typeorm';
 
+import { IFakeStoreAPI } from '@/application/contracts/gateways';
 import { AppError } from '@/application/errors';
 import { IUnitOfWorkTypeORM } from '@/domain/contracts/gateways';
 import { PgClient, PgProduct } from '@/infrastructure/database/postgres/entities';
@@ -15,6 +16,8 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
   constructor(
     @Inject('IUnitOfWorkTypeORM')
     private readonly uow: IUnitOfWorkTypeORM,
+    @Inject('IFakeStoreAPI')
+    private readonly fakeStoreAPI: IFakeStoreAPI,
   ) {}
 
   async execute(input: ClientsAddFavoriteProductCommand): Promise<void> {
@@ -26,22 +29,21 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
       throw new AppError('Deve haver no máximo 10 produtos');
     }
 
-    const productsId = input.id_products.map((id) => ({
-      id,
-    }));
-
-    const client = await clientRepo.findOne({
-      select: { id: true, favoriteProducts: { id: true } },
-      where: { id: input.id_client, favoriteProducts: productsId },
-      relations: { favoriteProducts: true },
-    });
+    const client = await clientRepo
+      .createQueryBuilder('client')
+      .leftJoinAndSelect('client.favoriteProducts', 'favoriteProducts', 'favoriteProducts.id IN (:...productsId)', {
+        productsId: input.id_products,
+      })
+      .where('client.id = :id_client', { id_client: input.id_client })
+      .select(['client.id', 'favoriteProducts.id'])
+      .getOne();
 
     if (!client) {
       throw new AppError('Cliente inválido');
     }
 
-    const productsUnique = input.id_products.filter((id) =>
-      client.favoriteProducts.some((product) => product.id !== id),
+    const productsUnique = input.id_products.filter(
+      (id) => client.favoriteProducts.length === 0 || client.favoriteProducts.some((product) => product.id !== id),
     );
 
     if (productsUnique.length === 0) {
@@ -55,6 +57,13 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
 
     if (products.length !== productsUnique.length) {
       throw new AppError('Um ou mais produtos inválidos');
+    }
+
+    for (const product of products) {
+      const existProduct = await this.fakeStoreAPI.getProductById(product.id_external);
+      if (!existProduct) {
+        throw new AppError(`Produto com ID "${product.id}" não encontrado na Fake Store API`);
+      }
     }
 
     const productPreparer = productsUnique.map((productId) => `('${client.id}', '${productId}')`).join(', ');
