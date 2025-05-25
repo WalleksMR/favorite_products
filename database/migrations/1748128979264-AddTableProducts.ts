@@ -12,7 +12,7 @@ export class AddTableProducts1748128979264 implements MigrationInterface {
           { name: 'id_external', type: 'varchar(64)', isNullable: true },
           { name: 'title', type: 'varchar(128)' },
           { name: 'image', type: 'varchar' },
-          { name: 'price', type: 'int' },
+          { name: 'price', type: 'decimal(10,2)' },
           { name: 'review', type: 'int', isNullable: true },
           { name: 'createdAt', type: 'timestamptz', default: 'now()' },
           { name: 'updatedAt', type: 'timestamptz', default: 'now()' },

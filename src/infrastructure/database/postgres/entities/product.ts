@@ -13,7 +13,7 @@ export class PgProduct {
   title: string;
   @Column()
   image: string;
-  @Column()
+  @Column({ type: 'decimal' })
   price: number;
   @Column()
   review: number | null;
