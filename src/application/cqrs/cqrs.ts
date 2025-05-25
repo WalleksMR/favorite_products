@@ -1,11 +1,15 @@
-import { ClientsCreateCommand } from './clients/commands';
-import { ClientsCreateCommandHandler, ClientsGetAllQueryHandler } from './clients/handlers';
+import { ClientsCreateCommand, ClientsDeleteCommand } from './clients/commands';
+import {
+  ClientsCreateCommandHandler,
+  ClientsDeleteCommandHandler,
+  ClientsGetAllQueryHandler,
+} from './clients/handlers';
 import { ClientsGetAllQuery } from './clients/queries';
 
 const Client = {
-  Commands: [ClientsCreateCommand],
+  Commands: [ClientsCreateCommand, ClientsDeleteCommand],
   Queries: [ClientsGetAllQuery],
-  Handlers: [ClientsGetAllQueryHandler, ClientsCreateCommandHandler],
+  Handlers: [ClientsGetAllQueryHandler, ClientsCreateCommandHandler, ClientsDeleteCommandHandler],
 };
 
 const Product = {

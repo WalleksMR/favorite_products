@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
-import { ClientsCreateCommand } from '@/application/cqrs/clients/commands';
+import { ClientsCreateCommand, ClientsDeleteCommand } from '@/application/cqrs/clients/commands';
 import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
 import { ErrorExemple } from '@/main/docs';
 import { ClientsGetOutputListExemple, ClientsGetOutputPaginationExemple } from '@/main/docs/controllers/clients';
@@ -57,6 +57,6 @@ export class ClientsController {
   @ApiOperation({ summary: 'Deletar um cliente' })
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return `Hello World ${id}`;
+    await this.commandBus.execute(new ClientsDeleteCommand(id));
   }
 }
