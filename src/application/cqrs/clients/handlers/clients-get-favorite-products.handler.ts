@@ -17,7 +17,7 @@ export class ClientsGetFavoriteProductsQueryHandler implements IQueryHandler<Cli
   ) {}
 
   async execute(input: ClientsGetFavoriteProductsQuery): Promise<Output> {
-    const client = this.uow
+    const client = await this.uow
       .getRepository(PgClient)
       .createQueryBuilder('client')
       .select(['client.id'])
