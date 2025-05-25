@@ -4,3 +4,9 @@ export class InvalidParameterError extends Error {
     this.name = 'InvalidParameterError';
   }
 }
+export class AppError extends Error {
+  constructor(message?: string) {
+    super(message ? message : 'App error');
+    this.name = 'AppError';
+  }
+}

@@ -10,7 +10,7 @@ import {
 import { catchError, Observable } from 'rxjs';
 import { QueryFailedError } from 'typeorm';
 
-import { InvalidParameterError, UnauthorizedError } from '@/application/errors';
+import { AppError, InvalidParameterError, UnauthorizedError } from '@/application/errors';
 
 @Injectable()
 export class ValidationInterceptor implements NestInterceptor {
@@ -23,6 +23,8 @@ export class ValidationInterceptor implements NestInterceptor {
           throw new BadRequestException(err.message);
         } else if (err instanceof QueryFailedError) {
           throw new InternalServerErrorException(err.message);
+        } else if (err instanceof AppError) {
+          throw new BadRequestException(err.message);
         } else {
           throw err;
         }
