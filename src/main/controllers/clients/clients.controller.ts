@@ -92,6 +92,8 @@ export class ClientsController {
   }
 
   @ApiOperation({ summary: 'Deletar um cliente' })
+  @ApiResponse({ description: 'No Content', status: HttpStatus.NO_CONTENT })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.commandBus.execute(new ClientsDeleteCommand(id));
