@@ -23,18 +23,11 @@ export class SeedFavoriteProducts1748050242978 implements MigrationInterface {
         }),
         favoriteProducts: [],
       },
-      {
-        ...new Client({
-          name: faker.name.fullName(),
-          email: faker.internet.email(),
-        }),
-        favoriteProducts: [],
-      },
     ];
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const client of clients) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 2; i++) {
         client.favoriteProducts.push(
           new Product({
             title: faker.commerce.productName(),
