@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Not } from 'typeorm';
 
 import { AppError } from '@/application/errors';
 import { IUnitOfWorkTypeORM } from '@/domain/contracts/gateways';
@@ -27,7 +28,7 @@ export class ClientsUpdateCommandHandler implements ICommandHandler<ClientsUpdat
     }
 
     if (input.email) {
-      const emailExists = await clientRepo.findOneBy({ email: input.email });
+      const emailExists = await clientRepo.findOneBy({ email: input.email, id: Not(input.id) });
       if (emailExists) {
         throw new AppError('Este e-mail ja existe');
       }
