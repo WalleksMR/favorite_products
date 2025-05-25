@@ -13,7 +13,7 @@ export class PaginationQueryOptions {
   @IsOptional()
   @IsString()
   restPage: string;
-  @ApiProperty({ required: false, description: 'Quantidade de itens que serão retornados por página', example: 25 })
+  @ApiProperty({ required: false, description: 'Quantidade de itens que serão retornados por página', example: 5 })
   @IsOptional()
   @IsString()
   restLimit: string;
