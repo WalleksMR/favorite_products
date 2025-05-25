@@ -5,7 +5,7 @@ import { PaginationOptions } from '@/application/contracts/gateways';
 import { Pagination } from '@/domain/contracts/gateways';
 
 export class PaginationQueryOptions {
-  @ApiProperty({ required: false, description: "Modo da listagem: 'paginate' ou 'list'", example: 'list' })
+  @ApiProperty({ required: false, description: "Modo da listagem: 'paginate' ou 'list'", example: 'paginate' })
   @IsOptional()
   @IsString()
   restMode: string;
