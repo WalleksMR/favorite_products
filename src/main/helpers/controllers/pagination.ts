@@ -1,40 +1,38 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
+import { PaginationOptions } from '@/application/contracts/gateways';
 import { Pagination } from '@/domain/contracts/gateways';
-type Input = {
-  'rest-mode': string;
-  'rest-page': string;
-  'rest-limit': string;
-};
-export function paginationOptions(input: Input) {
-  const RestPage = input['rest-page'] ? Number(input['rest-page']) : 1;
-  let RestLimit = input['rest-limit'] ? Number(input['rest-limit']) : 10;
 
-  if (RestLimit > 100) {
-    RestLimit = 100;
-  }
-
-  const RestMode: Pagination.RestMode = input['rest-mode'] ? Pagination.RestMode[input['rest-mode']] : 'paginate';
-  const options = {
-    RestPage,
-    RestLimit,
-    RestMode,
-  };
-  return options;
-}
-
-export class PaginationHeaderOptions {
+export class PaginationQueryOptions {
   @ApiProperty({ required: false, description: "Modo da listagem: 'paginate' ou 'list'", example: 'list' })
   @IsOptional()
   @IsString()
-  'rest-mode': string;
+  restMode: string;
   @ApiProperty({ required: false, description: 'Paginação', example: 1 })
   @IsOptional()
   @IsString()
-  'rest-page': string;
+  restPage: string;
   @ApiProperty({ required: false, description: 'Quantidade de itens que serão retornados por página', example: 25 })
   @IsOptional()
   @IsString()
-  'rest-limit': string;
+  restLimit: string;
+}
+
+export function paginationOptions(input: PaginationQueryOptions): PaginationOptions {
+  const restPage = input['restPage'] ? Number(input['restPage']) : 1;
+  let restLimit = input['restLimit'] ? Number(input['restLimit']) : 10;
+
+  if (restLimit > 100) {
+    restLimit = 100;
+  }
+
+  const restMode: Pagination.restMode = input['restMode'] ? Pagination.restMode[input['restMode']] : 'paginate';
+  const options = {
+    restPage,
+    restLimit,
+    restMode,
+  };
+
+  return options;
 }

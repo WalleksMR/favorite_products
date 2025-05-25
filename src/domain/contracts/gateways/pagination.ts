@@ -11,11 +11,11 @@ export type Pagination<T = any> = {
 
 export namespace Pagination {
   export type Options = {
-    RestPage?: number;
-    RestLimit?: number;
-    RestMode: RestMode;
+    restPage?: number;
+    restLimit?: number;
+    restMode: restMode;
   };
-  export enum RestMode {
+  export enum restMode {
     paginate = 'paginate',
     list = 'list',
   }
