@@ -2,6 +2,7 @@ import {
   ClientsCreateCommandHandler,
   ClientsDeleteCommandHandler,
   ClientsGetAllQueryHandler,
+  ClientsGetByIdQueryHandler,
   ClientsUpdateCommandHandler,
 } from './clients/handlers';
 
@@ -11,14 +12,11 @@ const Client = {
     ClientsCreateCommandHandler,
     ClientsDeleteCommandHandler,
     ClientsUpdateCommandHandler,
+    ClientsGetByIdQueryHandler,
   ],
 };
 
-const Product = {
-  Handlers: [],
-};
-
 // Register all handlers in CQRS module here
-const Handlers = [...Product.Handlers, ...Client.Handlers];
+const Handlers = [...Client.Handlers];
 
 export { Handlers };

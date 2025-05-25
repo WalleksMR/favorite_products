@@ -1,12 +1,16 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseBoolPipe, Post, Put, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import { ClientsCreateCommand, ClientsDeleteCommand, ClientsUpdateCommand } from '@/application/cqrs/clients/commands';
-import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
+import { ClientsGetAllQuery, ClientsGetByIdQuery } from '@/application/cqrs/clients/queries';
 import { ErrorExemple } from '@/main/docs';
-import { ClientsGetOutputListExemple, ClientsGetOutputPaginationExemple } from '@/main/docs/controllers/clients';
+import {
+  ClientsGetByIdOutputExemple,
+  ClientsGetOutputListExemple,
+  ClientsGetOutputPaginationExemple,
+} from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
 
 import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from './dto';
@@ -42,13 +46,19 @@ export class ClientsController {
   }
 
   @ApiOperation({ summary: 'Obter detalhamento de um cliente' })
+  @ApiParam({ name: 'id', description: 'Client ID', type: String })
+  @ApiQuery({ name: 'withFavoriteProducts', description: 'Incluir produtos favoritos', type: Boolean, required: false })
+  @ApiResponse({ example: ClientsGetByIdOutputExemple, status: HttpStatus.OK })
   @Get(':id')
-  async getById(@Param('id') id: string) {
-    return `Hello World ${id}`;
+  async getById(
+    @Param('id') id: string,
+    @Query('withFavoriteProducts', new ParseBoolPipe({ optional: true })) withFavoriteProducts = false,
+  ) {
+    return this.queryBus.execute(new ClientsGetByIdQuery({ id, withFavoriteProducts }));
   }
 
   @ApiOperation({ summary: 'Atualizar os dados de um cliente' })
-  @ApiParam({ name: 'id', description: 'Client ID', type: String })
+  @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: ClientsUpdateBodyDto) {
     await this.commandBus.execute(new ClientsUpdateCommand({ ...body, id }));
