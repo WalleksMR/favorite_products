@@ -1,13 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
+import { ClientsGetOutputListExemple, ClientsGetOutputPaginationExemple } from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
 
 import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from './dto';
 
+@ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiTags(ClientsController.ROUTE)
 @Controller(ClientsController.ROUTE)
 export class ClientsController {
@@ -15,6 +17,12 @@ export class ClientsController {
   constructor(private queryBus: QueryBus) {}
 
   @ApiOperation({ summary: 'Obter todos os clientes' })
+  @ApiResponse({ description: 'restMode: list', example: ClientsGetOutputListExemple, status: HttpStatus.OK })
+  @ApiResponse({
+    description: 'restMode: paginate',
+    example: ClientsGetOutputPaginationExemple,
+    status: HttpStatus.PARTIAL_CONTENT,
+  })
   @Get()
   async get(@Query() query: ClientsGetQueryDto) {
     const pagination = paginationOptions(query);
