@@ -23,6 +23,7 @@ export class ClientsGetAllQueryHandler implements IQueryHandler<ClientsGetAllQue
     }
 
     if (input.pagination.restMode === 'list') {
+      clientQueryBuilder.limit(input.pagination.restLimit);
       return await clientQueryBuilder.getMany();
     }
 
