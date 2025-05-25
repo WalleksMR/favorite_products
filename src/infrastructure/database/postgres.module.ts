@@ -10,6 +10,6 @@ import { LoggerModule } from '../gateways/logger/logger.module';
 @Module({
   imports: [TypeOrmConfigModule, TypeOrmModule.forFeature([PgClient, PgProduct]), LoggerModule],
   providers: [{ provide: 'IUnitOfWorkTypeORM', useClass: UnitOfWork }],
-  exports: [{ provide: 'IUnitOfWorkTypeORM', useClass: UnitOfWork }],
+  exports: ['IUnitOfWorkTypeORM'],
 })
 export class PostgresModule {}

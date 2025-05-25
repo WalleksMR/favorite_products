@@ -4,7 +4,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Injec
 import { Request } from 'express';
 import { QueryFailedError } from 'typeorm';
 
-import { LoggerService } from '@/infrastructure/gateways/logger/logger.service';
+import { ILogger } from '@/domain/contracts/gateways';
 
 interface IError {
   message: string;
@@ -14,18 +14,16 @@ interface IError {
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
   constructor(
-    @Inject(LoggerService)
-    private readonly logger: LoggerService,
+    @Inject(ILogger.Name)
+    private readonly logger: ILogger,
   ) {}
+
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest<Request>();
-    const method = request.method;
-    const route = request.route?.path || request.url;
 
     const { status, message } = this.Exception(exception);
-    const responseTimeInSeconds = (Date.now() - request['startTime']) / 1000;
 
     const responseData = {
       ...{
@@ -80,6 +78,4 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     return { status, message };
   }
-
-
 }
