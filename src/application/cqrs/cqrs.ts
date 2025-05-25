@@ -1,10 +1,11 @@
-import { ClientsGetAllQueryHandler } from './clients/handlers';
+import { ClientsCreateCommand } from './clients/commands';
+import { ClientsCreateCommandHandler, ClientsGetAllQueryHandler } from './clients/handlers';
 import { ClientsGetAllQuery } from './clients/queries';
 
 const Client = {
-  Commands: [],
+  Commands: [ClientsCreateCommand],
   Queries: [ClientsGetAllQuery],
-  Handlers: [ClientsGetAllQueryHandler],
+  Handlers: [ClientsGetAllQueryHandler, ClientsCreateCommandHandler],
 };
 
 const Product = {

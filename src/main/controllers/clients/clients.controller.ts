@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
+import { ClientsCreateCommand } from '@/application/cqrs/clients/commands';
 import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
 import { ClientsGetOutputListExemple, ClientsGetOutputPaginationExemple } from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
@@ -14,7 +15,10 @@ import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from '
 @Controller(ClientsController.ROUTE)
 export class ClientsController {
   static ROUTE = 'clients';
-  constructor(private queryBus: QueryBus) {}
+  constructor(
+    private queryBus: QueryBus,
+    private commandBus: CommandBus,
+  ) {}
 
   @ApiOperation({ summary: 'Obter todos os clientes' })
   @ApiResponse({ description: 'restMode: list', example: ClientsGetOutputListExemple, status: HttpStatus.OK })
@@ -32,7 +36,7 @@ export class ClientsController {
   @ApiOperation({ summary: 'Cadastrar um novo cliente' })
   @Post()
   async create(@Body() body: ClientsCreateBodyDto) {
-    return body;
+    await this.commandBus.execute(new ClientsCreateCommand(body));
   }
 
   @ApiOperation({ summary: 'Obter detalhamento de um cliente' })
