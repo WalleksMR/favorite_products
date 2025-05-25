@@ -30,6 +30,7 @@ import {
   ClientsGetQueryDto,
   ClientsUpdateBodyDto,
   ClientsGetFavoriteProductQueryDto,
+  ClientsAddFavoriteProductBodyDto,
 } from './dto';
 
 @ApiBadRequestResponse({ description: 'Bad Request', example: ErrorExemple })
@@ -85,14 +86,17 @@ export class ClientsController {
     await this.commandBus.execute(new ClientsDeleteCommand(id));
   }
 
-  @ApiOperation({ summary: 'Adicionar produtos favoritos' })
+  @ApiOperation({
+    summary: 'Adicionar produtos favoritos',
+    description:
+      'Enviar apenas `id_products` ou `ids_external`. Para os produtos que vem da API external, enviar no campo `ids_external` ',
+  })
   @ApiResponse({ description: 'No Content', status: HttpStatus.NO_CONTENT })
   @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
-  @ApiBody({ description: 'Lista de produtos favoritos', type: String, isArray: true })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Patch(':id/favorite-products/add')
-  async addFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
-    await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body));
+  async addFavoriteProducts(@Param('id') id: string, @Body() body: ClientsAddFavoriteProductBodyDto) {
+    await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body.id_products, body.ids_external));
   }
 
   @ApiOperation({ summary: 'Remover produtos favoritos' })
