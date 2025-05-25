@@ -7,16 +7,12 @@ import { TableName } from '../../utils';
 export class PgClient {
   @PrimaryColumn()
   id: string;
-
   @Column()
   name: string;
-
   @Column()
   email: string;
-
   @CreateDateColumn()
   createdAt: Date;
-
   @UpdateDateColumn()
   updatedAt: Date;
 
