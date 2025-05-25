@@ -16,11 +16,10 @@ export class ClientsGetAllQueryHandler implements IQueryHandler<ClientsGetAllQue
   ) {}
 
   async execute(input: ClientsGetAllQuery): Promise<Output> {
-    const clientQueryBuilder = this.uow.getRepository(PgClient).createQueryBuilder('client');
-
-    if (input.withFavoriteProducts) {
-      clientQueryBuilder.leftJoinAndSelect('client.favoriteProducts', 'favoriteProducts');
-    }
+    const clientQueryBuilder = this.uow
+      .getRepository(PgClient)
+      .createQueryBuilder('client')
+      .select(['client.id', 'client.name', 'client.email']);
 
     if (input.pagination.restMode === 'list') {
       clientQueryBuilder.limit(input.pagination.restLimit);

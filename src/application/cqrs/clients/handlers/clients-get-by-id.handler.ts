@@ -15,12 +15,21 @@ export class ClientsGetByIdQueryHandler implements IQueryHandler<ClientsGetByIdQ
   ) {}
 
   async execute(input: ClientsGetByIdQuery): Promise<Output> {
+    const select = ['client.id', 'client.name', 'client.email'];
     const clientQueryBuilder = this.uow.getRepository(PgClient).createQueryBuilder('client');
 
     if (input.withFavoriteProducts) {
       clientQueryBuilder.leftJoinAndSelect('client.favoriteProducts', 'favoriteProducts');
+      select.push(
+        'favoriteProducts.id',
+        'favoriteProducts.title',
+        'favoriteProducts.image',
+        'favoriteProducts.price',
+        'favoriteProducts.review',
+      );
     }
 
+    clientQueryBuilder.select(select);
     return clientQueryBuilder.where('client.id = :id', { id: input.id }).getOne();
   }
 }

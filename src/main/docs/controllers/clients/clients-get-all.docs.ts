@@ -1,6 +1,13 @@
 import { ClientsGetByIdOutputExemple } from './clients-get-by-id.docs';
 
-const clients = [ClientsGetByIdOutputExemple];
+const clients = [
+  {
+    id: ClientsGetByIdOutputExemple.id,
+    name: ClientsGetByIdOutputExemple.name,
+    email: ClientsGetByIdOutputExemple.email,
+  },
+];
+
 export const ClientsGetOutputListExemple = clients;
 export const ClientsGetOutputPaginationExemple = {
   items: clients,
