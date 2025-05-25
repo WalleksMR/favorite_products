@@ -127,6 +127,7 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
 
       productsExternal.push(
         new Product({
+          id_external: String(existProduct.id),
           image: existProduct.image,
           title: existProduct.title,
           price: existProduct.price,
