@@ -122,4 +122,4 @@ Veja mais em [LICENSE.md](LICENSE.md).
 
 ---
 
-Feito com ❤️ por Walleks Miranda 👋 [Meu LinkedIn](https://www.linkedin.com/in/walleks-r-miranda-b291bb1aa/)
+Feito com ❤️ por Walleks Miranda 👋 [Meu LinkedIn](https://www.linkedin.com/in/walleks-rodrigues-miranda/)
