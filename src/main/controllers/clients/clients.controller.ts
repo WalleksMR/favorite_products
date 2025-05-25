@@ -5,12 +5,13 @@ import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } f
 import { PaginationOptions } from '@/application/contracts/gateways';
 import { ClientsCreateCommand } from '@/application/cqrs/clients/commands';
 import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
+import { ErrorExemple } from '@/main/docs';
 import { ClientsGetOutputListExemple, ClientsGetOutputPaginationExemple } from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
 
 import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from './dto';
 
-@ApiBadRequestResponse({ description: 'Bad Request' })
+@ApiBadRequestResponse({ description: 'Bad Request', example: ErrorExemple })
 @ApiTags(ClientsController.ROUTE)
 @Controller(ClientsController.ROUTE)
 export class ClientsController {
@@ -34,6 +35,7 @@ export class ClientsController {
   }
 
   @ApiOperation({ summary: 'Cadastrar um novo cliente' })
+  @ApiResponse({ description: 'Created', status: HttpStatus.CREATED })
   @Post()
   async create(@Body() body: ClientsCreateBodyDto) {
     await this.commandBus.execute(new ClientsCreateCommand(body));
