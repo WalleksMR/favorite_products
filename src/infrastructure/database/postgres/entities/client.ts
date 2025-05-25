@@ -29,5 +29,5 @@ export class PgClient {
       referencedColumnName: 'id',
     },
   })
-  favoriteProducts: PgProduct[];
+  favoriteProducts?: PgProduct[];
 }
