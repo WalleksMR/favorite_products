@@ -53,11 +53,13 @@ export class ClientsRemoveFavoriteProductCommandHandler
       });
     }
 
-    if (client.favoriteProducts.length === 0) {
+    const favoriteProducts = await favoriteProductsBuilder.getMany();
+
+    if (favoriteProducts.length === 0) {
       throw new AppError('Nenhum produto favorito encontrado');
     }
 
-    if (client.favoriteProducts.length !== input.id_products.length) {
+    if (favoriteProducts.length !== input.id_products.length) {
       throw new AppError('Todos os produtos devem estar como favoritos');
     }
 
