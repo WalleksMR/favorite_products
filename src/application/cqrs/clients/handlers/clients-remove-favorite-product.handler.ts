@@ -59,11 +59,14 @@ export class ClientsRemoveFavoriteProductCommandHandler
       throw new AppError('Nenhum produto favorito encontrado');
     }
 
-    if (favoriteProducts.length !== input.id_products.length) {
+    if (
+      (input.id_products.length && favoriteProducts.length !== input.id_products.length) ||
+      (input.ids_external.length && favoriteProducts.length !== input.ids_external.length)
+    ) {
       throw new AppError('Todos os produtos devem estar como favoritos');
     }
 
-    const productIds = input.id_products.map((id) => `'${id}'`).join(',');
+    const productIds = favoriteProducts.map((product) => `'${product.id}'`).join(',');
     const query = `DELETE FROM ${env.database.schema}.${TableName.FavoriteProducts} WHERE id_client = $1 AND id_product IN (${productIds})`;
     await this.uow.query(query, [input.id_client]);
   }
