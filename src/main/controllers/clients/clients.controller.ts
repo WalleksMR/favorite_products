@@ -46,7 +46,7 @@ export class ClientsController {
   }
 
   @ApiOperation({ summary: 'Obter detalhamento de um cliente' })
-  @ApiParam({ name: 'id', description: 'Client ID', type: String })
+  @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
   @ApiQuery({ name: 'withFavoriteProducts', description: 'Incluir produtos favoritos', type: Boolean, required: false })
   @ApiResponse({ example: ClientsGetByIdOutputExemple, status: HttpStatus.OK })
   @Get(':id')
