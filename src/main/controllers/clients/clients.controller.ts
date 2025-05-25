@@ -1,17 +1,24 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
-import { ClientsCreateBodyDto, ClientsUpdateBodyDto } from './dto';
+import { PaginationOptions } from '@/application/contracts/gateways';
+import { ClientsGetAllQuery } from '@/application/cqrs/clients/queries';
+import { paginationOptions } from '@/main/helpers/controllers';
+
+import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from './dto';
 
 @ApiTags(ClientsController.ROUTE)
 @Controller(ClientsController.ROUTE)
 export class ClientsController {
   static ROUTE = 'clients';
+  constructor(private queryBus: QueryBus) {}
 
   @ApiOperation({ summary: 'Obter todos os clientes' })
   @Get()
-  async get() {
-    return 'Hello World';
+  async get(@Query() query: ClientsGetQueryDto) {
+    const pagination = paginationOptions(query);
+    return this.queryBus.execute(new ClientsGetAllQuery(new PaginationOptions(pagination), query.withFavoriteProducts));
   }
 
   @ApiOperation({ summary: 'Cadastrar um novo cliente' })

@@ -8,12 +8,7 @@ import { ValidationConfigModule } from '@/infrastructure/gateways/validation';
 import { Commands, Handlers, Queries } from './cqrs';
 
 @Module({
-  imports: [
-    CqrsModule,
-    PostgresModule,
-    ValidationConfigModule,
-    LoggerModule,
-  ],
+  imports: [CqrsModule, PostgresModule, ValidationConfigModule, LoggerModule],
   providers: [...Queries, ...Handlers, ...Commands],
   exports: [...Queries, ...Handlers, ...Commands],
 })
