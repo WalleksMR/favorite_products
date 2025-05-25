@@ -31,7 +31,11 @@ import {
   ClientsDeleteCommand,
   ClientsUpdateCommand,
 } from '@/application/cqrs/clients/commands';
-import { ClientsGetAllQuery, ClientsGetByIdQuery } from '@/application/cqrs/clients/queries';
+import {
+  ClientsGetAllQuery,
+  ClientsGetByIdQuery,
+  ClientsGetFavoriteProductsQuery,
+} from '@/application/cqrs/clients/queries';
 import { ErrorExemple } from '@/main/docs';
 import {
   ClientsGetByIdOutputExemple,
@@ -40,7 +44,12 @@ import {
 } from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
 
-import { ClientsCreateBodyDto, ClientsGetQueryDto, ClientsUpdateBodyDto } from './dto';
+import {
+  ClientsCreateBodyDto,
+  ClientsGetQueryDto,
+  ClientsUpdateBodyDto,
+  ClientsGetFavoriteProductQueryDto,
+} from './dto';
 
 @ApiBadRequestResponse({ description: 'Bad Request', example: ErrorExemple })
 @ApiTags(ClientsController.ROUTE)
@@ -117,5 +126,13 @@ export class ClientsController {
   @Patch(':id/favorite-products/remove')
   async removeFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
     await this.commandBus.execute(new ClientsRemoveFavoriteProductCommand(id, body));
+  }
+
+  @ApiOperation({ summary: 'Listar produtos favoritos' })
+  @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
+  @Get(':id/favorite-products')
+  async getFavoriteProducts(@Param('id') id: string, @Query() query: ClientsGetFavoriteProductQueryDto) {
+    const pagination = paginationOptions(query);
+    return this.queryBus.execute(new ClientsGetFavoriteProductsQuery(id, pagination));
   }
 }
