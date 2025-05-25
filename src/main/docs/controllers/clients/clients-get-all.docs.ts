@@ -8,8 +8,8 @@ const clients = [
   },
 ];
 
-export const ClientsGetOutputListExemple = clients;
-export const ClientsGetOutputPaginationExemple = {
+export const ClientsGetOutputListOutputExemple = clients;
+export const ClientsGetOutputPaginationOutputExemple = {
   items: clients,
   meta: {
     itemCount: 1,

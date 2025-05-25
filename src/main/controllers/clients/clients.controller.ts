@@ -18,8 +18,10 @@ import {
 import { ErrorExemple } from '@/main/docs';
 import {
   ClientsGetByIdOutputExemple,
-  ClientsGetOutputListExemple,
-  ClientsGetOutputPaginationExemple,
+  ClientsGetFavoriteProductsOutputExemple,
+  ClientsGetFavoriteProductsPaginationOutputExemple,
+  ClientsGetOutputListOutputExemple,
+  ClientsGetOutputPaginationOutputExemple,
 } from '@/main/docs/controllers/clients';
 import { paginationOptions } from '@/main/helpers/controllers';
 
@@ -41,10 +43,10 @@ export class ClientsController {
   ) {}
 
   @ApiOperation({ summary: 'Obter todos os clientes' })
-  @ApiResponse({ description: 'restMode: list', example: ClientsGetOutputListExemple, status: HttpStatus.OK })
+  @ApiResponse({ description: 'restMode: list', example: ClientsGetOutputListOutputExemple, status: HttpStatus.OK })
   @ApiResponse({
     description: 'restMode: paginate',
-    example: ClientsGetOutputPaginationExemple,
+    example: ClientsGetOutputPaginationOutputExemple,
     status: HttpStatus.PARTIAL_CONTENT,
   })
   @Get()
@@ -105,6 +107,16 @@ export class ClientsController {
 
   @ApiOperation({ summary: 'Listar produtos favoritos' })
   @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
+  @ApiResponse({
+    description: 'restMode: list',
+    example: ClientsGetFavoriteProductsOutputExemple,
+    status: HttpStatus.OK,
+  })
+  @ApiResponse({
+    description: 'restMode: paginate',
+    example: ClientsGetFavoriteProductsPaginationOutputExemple,
+    status: HttpStatus.PARTIAL_CONTENT,
+  })
   @Get(':id/favorite-products')
   async getFavoriteProducts(@Param('id') id: string, @Query() query: ClientsGetFavoriteProductQueryDto) {
     const pagination = paginationOptions(query);
