@@ -3,14 +3,12 @@ import { Pagination } from '@/domain/contracts/gateways';
 
 export class ClientsGetAllQuery {
   pagination: Pagination.Options;
-  withFavoriteProducts: boolean;
 
-  constructor(pagination: PaginationOptions, withFavoriteProducts = false) {
+  constructor(pagination: PaginationOptions) {
     this.pagination = {
       restMode: pagination.restMode,
       restLimit: pagination.restLimit,
       restPage: pagination.restPage,
     };
-    this.withFavoriteProducts = withFavoriteProducts;
   }
 }

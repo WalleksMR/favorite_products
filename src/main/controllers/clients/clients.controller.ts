@@ -62,7 +62,7 @@ export class ClientsController {
   @Get()
   async get(@Query() query: ClientsGetQueryDto) {
     const pagination = paginationOptions(query);
-    return this.queryBus.execute(new ClientsGetAllQuery(new PaginationOptions(pagination), query.withFavoriteProducts));
+    return this.queryBus.execute(new ClientsGetAllQuery(new PaginationOptions(pagination)));
   }
 
   @ApiOperation({ summary: 'Cadastrar um novo cliente' })
