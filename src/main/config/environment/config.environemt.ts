@@ -28,6 +28,7 @@ class Env {
     mode_debugger: boolean;
     seeds: Array<string>;
     node_env: string;
+    maxFavoriteProducts: number;
   };
 
   constructor() {
@@ -47,6 +48,7 @@ class Env {
       mode_debugger: this.ModeDebugger(),
       seeds: this.GetSeeds(),
       node_env: process.env.NODE_ENV,
+      maxFavoriteProducts: parseInt(process.env.MAX_FAVORITE_PRODUCTS) || 10,
     };
 
     this.path = path;

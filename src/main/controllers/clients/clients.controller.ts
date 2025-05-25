@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiBadRequestResponse, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import {
@@ -31,6 +31,7 @@ import {
   ClientsUpdateBodyDto,
   ClientsGetFavoriteProductQueryDto,
   ClientsAddFavoriteProductBodyDto,
+  ClientsRemoveFavoriteProductBodyDto,
 } from './dto';
 
 @ApiBadRequestResponse({ description: 'Bad Request', example: ErrorExemple })
@@ -99,14 +100,17 @@ export class ClientsController {
     await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body.id_products, body.ids_external));
   }
 
-  @ApiOperation({ summary: 'Remover produtos favoritos' })
+  @ApiOperation({
+    summary: 'Remover produtos favoritos',
+    description:
+      'Enviar apenas `id_products` ou `ids_external`. Para os produtos que vem da API external, enviar no campo `ids_external` ',
+  })
   @ApiResponse({ description: 'No Content', status: HttpStatus.NO_CONTENT })
   @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
-  @ApiBody({ description: 'Lista de produtos favoritos', type: String, isArray: true })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Patch(':id/favorite-products/remove')
-  async removeFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
-    await this.commandBus.execute(new ClientsRemoveFavoriteProductCommand(id, body));
+  async removeFavoriteProducts(@Param('id') id: string, @Body() body: ClientsRemoveFavoriteProductBodyDto) {
+    await this.commandBus.execute(new ClientsRemoveFavoriteProductCommand(id, body.id_products, body.ids_external));
   }
 
   @ApiOperation({ summary: 'Listar produtos favoritos' })
