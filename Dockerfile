@@ -13,8 +13,8 @@ RUN apk add --no-cache nodejs yarn npm bash
 COPY . .
 COPY --from=build /srv/api/node_modules /srv/api/node_modules
 
-ARG PORT=5018
-ARG NODE_ENV=local
+ARG PORT=80
+ARG NODE_ENV=development
 
 ENV PORT=${PORT}
 ENV NODE_ENV=${NODE_ENV}
@@ -22,6 +22,4 @@ ENV NODE_ENV=${NODE_ENV}
 EXPOSE $PORT
 RUN yarn build
 
-ENTRYPOINT ["/bin/bash", "-c", "if [ ${NODE_ENV} != 'production' ]; then yarn migration:run:local; fi &&\
-  NODE_ENV=${NODE_ENV} \
-  node dist/src/main/main.js"]
+ENTRYPOINT ["/bin/bash", "-c", "yarn seed:run:dev && node dist/src/main/main.js"]

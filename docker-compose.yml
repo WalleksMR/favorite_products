@@ -1,5 +1,21 @@
-version: '3.9'
 services:
+  api:
+    container_name: favorite_products_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:80
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - db
+    networks:
+      - aiqfome_network
   db:
     image: postgres:alpine
     container_name: favorite_products_db
@@ -9,3 +25,10 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    networks:
+      - aiqfome_network
+
+networks:
+  aiqfome_network:
+    driver: bridge
+    name: 'aiqfome_network'
