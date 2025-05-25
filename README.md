@@ -3,36 +3,37 @@
 </h1>
 
 <h3 align="center">
-  aqifome
+  aiqfome
 </h3>
 
 <p align="center">Gerenciamento de produtos favoritos</p>
 
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/static/v1?label=TypeScript&message=99.3%&color=blue">
-
-   <img alt="GitHub" src="https://img.shields.io/static/v1?label=Licence&message=MIT&color=blue"/>
-
+  <img alt="GitHub" src="https://img.shields.io/static/v1?label=Licence&message=MIT&color=blue"/>
   <a href="https://www.linkedin.com/in/walleks-r-miranda-b291bb1aa/" target="_blank" rel="noopener noreferrer">
     <img alt="Made by" src="https://img.shields.io/static/v1?label=Made%20by&message=Walleks%20M&color=blueviolet">
   </a>
-
 </p>
 
 <p align="center">
   <a href="#sobre-o-projeto">Sobre o Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-introducao">Introdução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#introducao">Introdução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#licenca">Licença</a>
 </p>
 
-## Sobre o projeto
+---
 
-Uma API para gerenciar produtos favoritos integrando com [FakeStoreAPI](https://fakestoreapi.com/).
+## 📖 Sobre o Projeto
+
+API para gerenciar produtos favoritos, integrando com a [FakeStoreAPI](https://fakestoreapi.com/).
+
+---
 
 ## 🚀 Tecnologias
 
-Tecnologias que usei para desenvolver esta API.
+Tecnologias utilizadas neste projeto:
 
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -48,60 +49,77 @@ Tecnologias que usei para desenvolver esta API.
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 
-## 💻 Introdução
+---
 
-Para executar este projeto em sua máquina, segue abaixo alguns requisitos.
+## 🏁 Introdução
 
-### Requisitos
+Siga os passos abaixo para rodar o projeto localmente.
+
+### Pré-requisitos
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/)
 - [Docker](https://www.docker.com/)
 
-**Clona este projeto e acessa a pasta**
+### Instalação
 
-```bash
-$ git clone https://github.com/WalleksMR/favorite_products.git && cd favorite_products
-```
+1. **Clone o repositório e acesse a pasta:**
 
-**Segue o passo a passo a baixo**
+   ```bash
+   git clone https://github.com/WalleksMR/favorite_products.git
+   cd favorite_products
+   ```
 
-```bash
-# Iniciar aplicação junto com banco de dados
-$ yarn up
+2. **Inicie a aplicação com Docker (recomendado):**
 
-# Quando os serviços estiverem em execução, ira executar as migrations e seed do usuario "johndoe@email.com"
-# Esse usuário sera utilizado para fazer o login
+   ```bash
+   # Inicia a aplicação e o banco de dados
+   yarn up
+   ```
 
-# Muito bem, aplicação está em executação
-```
+   - As migrations e o seed do usuário `johndoe@email.com` serão executados automaticamente.
+   - Use esse usuário para login inicial.
 
-As configuração já estão aplicadas no arquivo `env/development.env`
+3. **Acesse a documentação da API:**
 
-Para acessar a documentação: [Swagger Docs](http://localhost:3030/aiqfome/docs)
+   - [Swagger Docs](http://localhost:3030/aiqfome/docs)
+   - _Obs: a API deve estar em execução para acessar a documentação._
 
-_Obs: para acessar essa documentação, a API precisa esta em execução._
-
-Caso deseja executar a API no seu terminal, segue os passos abaixo:
-
-```bash
-# Instalar as dependências
-$ yarn
-
-# Levantar uma instancia do banco PostgreSQL local
-$ yarn up:db
-
-# Executar o seguinte comentado:
-$ yarn local
-
-# Obs: Não pode executar os 2 comandos ao mesmo tempo "yarn up" e "yarn local", pois ambas estão na mesma porta "3030". Mas caso queria executar, altere a porta no arquivo `env/local.env`
-
-```
-
-## 📝 Licença
-
-Este projeto está licenciado sob a licença MIT - Veja [Licença](LICENSE.md) para mais detalhes.
+4. **Configuração de ambiente:**
+   - As configurações já estão no arquivo `env/development.env`.
 
 ---
 
-Made with ❤️ &nbsp;by Walleks Miranda 👋 &nbsp;[See my linkedin](https://www.linkedin.com/in/walleks-r-miranda-b291bb1aa/)
+### 💡 Alternativa: Executar manualmente (sem imagem docker da API)
+
+1. **Instale as dependências:**
+
+   ```bash
+   yarn
+   ```
+
+2. **Suba uma instância local do PostgreSQL:**
+
+   ```bash
+   yarn up:db
+   ```
+
+3. **Execute a aplicação:**
+   ```bash
+   yarn local
+   ```
+
+> ⚠️ **Atenção:**  
+> Não execute `yarn up` e `yarn local` ao mesmo tempo, pois ambos usam a porta `3030`.  
+> Se necessário, altere a porta no arquivo `env/local.env`.
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a licença MIT.  
+Veja mais em [LICENSE.md](LICENSE.md).
+
+---
+
+Feito com ❤️ por Walleks Miranda 👋 [Meu LinkedIn](https://www.linkedin.com/in/walleks-r-miranda-b291bb1aa/)
