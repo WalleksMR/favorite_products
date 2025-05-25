@@ -4,6 +4,7 @@ import {
   ClientsDeleteCommandHandler,
   ClientsGetAllQueryHandler,
   ClientsGetByIdQueryHandler,
+  ClientsRemoveFavoriteProductCommandHandler,
   ClientsUpdateCommandHandler,
 } from './clients/handlers';
 
@@ -15,6 +16,7 @@ const Client = {
     ClientsUpdateCommandHandler,
     ClientsGetByIdQueryHandler,
     ClientsAddFavoriteProductCommandHandler,
+    ClientsRemoveFavoriteProductCommandHandler,
   ],
 };
 

@@ -25,6 +25,7 @@ import {
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import {
+  ClientsRemoveFavoriteProductCommand,
   ClientsAddFavoriteProductCommand,
   ClientsCreateCommand,
   ClientsDeleteCommand,
@@ -104,5 +105,15 @@ export class ClientsController {
   @Patch(':id/favorite-products/add')
   async addFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
     await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body));
+  }
+
+  @ApiOperation({ summary: 'Remover produtos favoritos' })
+  @ApiResponse({ description: 'No Content', status: HttpStatus.NO_CONTENT })
+  @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
+  @ApiBody({ description: 'Lista de produtos favoritos', type: String, isArray: true })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Patch(':id/favorite-products/remove')
+  async removeFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
+    await this.commandBus.execute(new ClientsRemoveFavoriteProductCommand(id, body));
   }
 }
