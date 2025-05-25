@@ -1,27 +1,6 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseBoolPipe,
-  Patch,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiQuery,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
 import {
@@ -83,14 +62,10 @@ export class ClientsController {
 
   @ApiOperation({ summary: 'Obter detalhamento de um cliente' })
   @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
-  @ApiQuery({ name: 'withFavoriteProducts', description: 'Incluir produtos favoritos', type: Boolean, required: false })
   @ApiResponse({ example: ClientsGetByIdOutputExemple, status: HttpStatus.OK })
   @Get(':id')
-  async getById(
-    @Param('id') id: string,
-    @Query('withFavoriteProducts', new ParseBoolPipe({ optional: true })) withFavoriteProducts = false,
-  ) {
-    return this.queryBus.execute(new ClientsGetByIdQuery({ id, withFavoriteProducts }));
+  async getById(@Param('id') id: string) {
+    return this.queryBus.execute(new ClientsGetByIdQuery({ id }));
   }
 
   @ApiOperation({ summary: 'Atualizar os dados de um cliente' })
