@@ -55,8 +55,8 @@ Para executar este projeto em sua máquina, segue abaixo alguns requisitos.
 ### Requisitos
 
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/) ou [npm](https://www.npmjs.com/)
-- Uma instância de [PostgresQL](https://www.mysql.com)
+- [Yarn](https://classic.yarnpkg.com/)
+- [Docker](https://www.docker.com/)
 
 **Clona este projeto e acessa a pasta**
 
