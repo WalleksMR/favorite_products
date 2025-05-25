@@ -9,12 +9,19 @@ export class AddTableProducts1748128979264 implements MigrationInterface {
         name: TableName.Products,
         columns: [
           { name: 'id', type: 'uuid', isPrimary: true },
+          { name: 'id_external', type: 'varchar(64)', isNullable: true },
           { name: 'title', type: 'varchar(128)' },
           { name: 'image', type: 'varchar' },
           { name: 'price', type: 'int' },
           { name: 'review', type: 'int', isNullable: true },
           { name: 'createdAt', type: 'timestamptz', default: 'now()' },
           { name: 'updatedAt', type: 'timestamptz', default: 'now()' },
+        ],
+        indices: [
+          {
+            name: 'IDX_product_external',
+            columnNames: ['id_external'],
+          },
         ],
       }),
     );

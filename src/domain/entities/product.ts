@@ -4,6 +4,7 @@ import { PartialPick } from '../core/partial-types';
 
 export class Product {
   id: string;
+  id_external: string;
   title: string;
   image: string;
   price: number;
@@ -13,6 +14,7 @@ export class Product {
 
   constructor(props: ProductProps) {
     this.id = props?.id || new UUID().generate();
+    this.id_external = props?.id_external || null;
     this.title = props.title;
     this.image = props.image;
     this.price = props.price;
@@ -22,4 +24,4 @@ export class Product {
   }
 }
 
-type ProductProps = PartialPick<Product, 'id' | 'createdAt' | 'updatedAt'>;
+type ProductProps = PartialPick<Product, 'id' | 'id_external' | 'createdAt' | 'updatedAt'>;

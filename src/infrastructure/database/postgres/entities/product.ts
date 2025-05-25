@@ -8,6 +8,8 @@ export class PgProduct {
   @PrimaryColumn()
   id: string;
   @Column()
+  id_external: string;
+  @Column()
   title: string;
   @Column()
   image: string;
