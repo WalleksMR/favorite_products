@@ -1,3 +1,4 @@
+import { AuthLoginQueryHandler } from './auth/handler';
 import {
   ClientsAddFavoriteProductCommandHandler,
   ClientsCreateCommandHandler,
@@ -22,7 +23,11 @@ const Client = {
   ],
 };
 
+const Auth = {
+  Handlers: [AuthLoginQueryHandler],
+};
+
 // Register all handlers in CQRS module here
-const Handlers = [...Client.Handlers];
+const Handlers = [...Client.Handlers, ...Auth.Handlers];
 
 export { Handlers };

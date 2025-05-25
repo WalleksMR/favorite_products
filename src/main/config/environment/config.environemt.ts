@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { SignOptions } from 'jsonwebtoken';
 const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'local';
 let path: string;
 
@@ -33,7 +34,7 @@ class Env {
 
   public readonly jwt: {
     secret: string;
-    expiresIn: string;
+    expiresIn: SignOptions['expiresIn'];
   };
 
   constructor() {
@@ -58,7 +59,7 @@ class Env {
 
     this.jwt = {
       secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN,
+      expiresIn: process.env.JWT_EXPIRES_IN as SignOptions['expiresIn'],
     };
 
     this.path = path;
