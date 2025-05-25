@@ -26,8 +26,8 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
     const productRepo = this.uow.getRepository(PgProduct);
 
     const productLength = input.id_products.length || input.ids_external.length;
-    if (productLength > 10) {
-      throw new AppError('Deve haver no máximo 10 produtos');
+    if (productLength > env.app.maxFavoriteProducts) {
+      throw new AppError(`Deve haver no máximo "${env.app.maxFavoriteProducts}" produtos`);
     }
 
     const client = await clientRepo
@@ -40,7 +40,7 @@ export class ClientsAddFavoriteProductCommandHandler implements ICommandHandler<
       throw new AppError('Cliente inválido');
     }
 
-    const favoriteProductsBuilder = await productRepo
+    const favoriteProductsBuilder = productRepo
       .createQueryBuilder('product')
       .innerJoin('product.clients', 'clients')
       .where('clients.id = :id_client', { id_client: input.id_client })
