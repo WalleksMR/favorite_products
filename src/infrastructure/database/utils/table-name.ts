@@ -1,4 +1,5 @@
 export enum TableName {
-  Product = 'products',
-  Client = 'clients',
+  FavoriteProducts = 'favorite_products',
+  Products = 'products',
+  Clients = 'clients',
 }

@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
+import { PgProduct } from './product';
 import { TableName } from '../../utils';
 
-@Entity(TableName.Client)
+@Entity(TableName.Clients)
 export class PgClient {
   @PrimaryColumn()
   id: string;
@@ -15,4 +16,18 @@ export class PgClient {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(() => PgProduct, (product) => product.clients, { cascade: true })
+  @JoinTable({
+    name: TableName.FavoriteProducts,
+    joinColumn: {
+      name: 'id_client',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'id_product',
+      referencedColumnName: 'id',
+    },
+  })
+  favoriteProducts: PgProduct[];
 }
