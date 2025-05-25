@@ -32,12 +32,16 @@ export class AddTableProducts1748128979264 implements MigrationInterface {
             columnNames: ['id_client'],
             referencedTableName: TableName.Clients,
             referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
           },
           {
             name: 'FK_product',
             columnNames: ['id_product'],
             referencedTableName: TableName.Products,
             referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
           },
         ],
         indices: [

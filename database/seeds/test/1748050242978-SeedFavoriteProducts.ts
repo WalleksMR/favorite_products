@@ -3,6 +3,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 import { Client, Product } from '@/domain/entities';
 import { PgClient } from '@/infrastructure/database/postgres/entities';
+import { TableName } from '@/infrastructure/database/utils';
 export class SeedFavoriteProducts1748050242978 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const clientRepo = queryRunner.manager.getRepository(PgClient);
@@ -46,7 +47,7 @@ export class SeedFavoriteProducts1748050242978 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query('TRUNCATE TABLE favorite_products CASCADE');
-    queryRunner.query('TRUNCATE TABLE products CASCADE');
+    queryRunner.query(`TRUNCATE TABLE ${TableName.Clients} CASCADE`);
+    queryRunner.query(`TRUNCATE TABLE ${TableName.Products} CASCADE`);
   }
 }
