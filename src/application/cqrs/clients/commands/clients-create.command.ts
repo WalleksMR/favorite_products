@@ -7,7 +7,7 @@ export class ClientsCreateCommand {
   email: string;
 
   constructor(props: ClientsCreateCommand) {
-    this.name = props?.name;
-    this.email = props?.email;
+    this.name = props.name;
+    this.email = props.email;
   }
 }

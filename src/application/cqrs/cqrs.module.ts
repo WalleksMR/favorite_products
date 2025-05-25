@@ -5,11 +5,11 @@ import { PostgresModule } from '@/infrastructure/database/postgres.module';
 import { LoggerModule } from '@/infrastructure/gateways/logger/logger.module';
 import { ValidationConfigModule } from '@/infrastructure/gateways/validation';
 
-import { Commands, Handlers, Queries } from './cqrs';
+import { Handlers } from './cqrs';
 
 @Module({
   imports: [CqrsModule, PostgresModule, ValidationConfigModule, LoggerModule],
-  providers: [...Queries, ...Handlers, ...Commands],
-  exports: [...Queries, ...Handlers, ...Commands],
+  providers: [...Handlers],
+  exports: [...Handlers],
 })
 export class CqrsConfigModule {}

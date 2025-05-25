@@ -7,9 +7,9 @@ export class ClientsGetAllQuery {
 
   constructor(pagination: PaginationOptions, withFavoriteProducts = false) {
     this.pagination = {
-      restMode: pagination?.restMode,
-      restLimit: pagination?.restLimit,
-      restPage: pagination?.restPage,
+      restMode: pagination.restMode,
+      restLimit: pagination.restLimit,
+      restPage: pagination.restPage,
     };
     this.withFavoriteProducts = withFavoriteProducts;
   }
