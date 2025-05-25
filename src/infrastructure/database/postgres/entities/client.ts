@@ -9,6 +9,9 @@ export class PgClient {
   id: string;
 
   @Column()
+  name: string;
+
+  @Column()
   email: string;
 
   @CreateDateColumn()

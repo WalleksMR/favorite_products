@@ -9,6 +9,7 @@ export class AddTableClient1748050207585 implements MigrationInterface {
         name: TableName.Clients,
         columns: [
           { name: 'id', type: 'uuid', isPrimary: true },
+          { name: 'name', type: 'varchar(128)' },
           { name: 'email', type: 'varchar(128)', isUnique: true },
           { name: 'createdAt', type: 'timestamptz', default: 'now()' },
           { name: 'updatedAt', type: 'timestamptz', default: 'now()' },

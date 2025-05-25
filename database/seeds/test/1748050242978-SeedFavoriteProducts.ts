@@ -11,18 +11,21 @@ export class SeedFavoriteProducts1748050242978 implements MigrationInterface {
     const clients = [
       {
         ...new Client({
+          name: 'John Doe',
           email: 'johndoe@email.com',
         }),
         favoriteProducts: [],
       },
       {
         ...new Client({
+          name: faker.name.fullName(),
           email: faker.internet.email(),
         }),
         favoriteProducts: [],
       },
       {
         ...new Client({
+          name: faker.name.fullName(),
           email: faker.internet.email(),
         }),
         favoriteProducts: [],

@@ -24,6 +24,7 @@ export class ClientsCreateCommandHandler implements ICommandHandler<ClientsCreat
     }
 
     const newClient = new Client({
+      name: input.name,
       email: input.email,
     });
 

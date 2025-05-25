@@ -23,7 +23,7 @@ export class ClientsUpdateCommandHandler implements ICommandHandler<ClientsUpdat
     }
 
     if (input.name) {
-      // client.name = input.name;
+      client.name = input.name;
     }
 
     if (input.email) {
