@@ -1,4 +1,5 @@
 import {
+  ClientsAddFavoriteProductCommandHandler,
   ClientsCreateCommandHandler,
   ClientsDeleteCommandHandler,
   ClientsGetAllQueryHandler,
@@ -13,6 +14,7 @@ const Client = {
     ClientsDeleteCommandHandler,
     ClientsUpdateCommandHandler,
     ClientsGetByIdQueryHandler,
+    ClientsAddFavoriteProductCommandHandler,
   ],
 };
 

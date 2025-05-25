@@ -1,9 +1,35 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, ParseBoolPipe, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseBoolPipe,
+  Patch,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiBadRequestResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { PaginationOptions } from '@/application/contracts/gateways';
-import { ClientsCreateCommand, ClientsDeleteCommand, ClientsUpdateCommand } from '@/application/cqrs/clients/commands';
+import {
+  ClientsAddFavoriteProductCommand,
+  ClientsCreateCommand,
+  ClientsDeleteCommand,
+  ClientsUpdateCommand,
+} from '@/application/cqrs/clients/commands';
 import { ClientsGetAllQuery, ClientsGetByIdQuery } from '@/application/cqrs/clients/queries';
 import { ErrorExemple } from '@/main/docs';
 import {
@@ -68,5 +94,15 @@ export class ClientsController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.commandBus.execute(new ClientsDeleteCommand(id));
+  }
+
+  @ApiOperation({ summary: 'Adicionar produtos favoritos' })
+  @ApiResponse({ description: 'No Content', status: HttpStatus.NO_CONTENT })
+  @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
+  @ApiBody({ description: 'Lista de produtos favoritos', type: String, isArray: true })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Patch(':id/favorite-products')
+  async addFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
+    await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body));
   }
 }
