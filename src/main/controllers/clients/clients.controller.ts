@@ -101,7 +101,7 @@ export class ClientsController {
   @ApiParam({ name: 'id', description: 'Id do cliente', type: String })
   @ApiBody({ description: 'Lista de produtos favoritos', type: String, isArray: true })
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Patch(':id/favorite-products')
+  @Patch(':id/favorite-products/add')
   async addFavoriteProducts(@Param('id') id: string, @Body() body: string[]) {
     await this.commandBus.execute(new ClientsAddFavoriteProductCommand(id, body));
   }
