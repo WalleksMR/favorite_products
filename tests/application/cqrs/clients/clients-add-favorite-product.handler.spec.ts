@@ -85,4 +85,25 @@ describe(ClientsAddFavoriteProductCommandHandler.name, () => {
     expect(productRepo.save).toHaveBeenCalledWith([expect.objectContaining({ id_external: 'external-1' })]);
     expect(uow.query).toHaveBeenCalled();
   });
+
+  it('should be able add product in favorite sending id_products', async () => {
+    const id_products = ['019704cc-11ec-766e-b002-78a6ea0cbedf'];
+    const command = new ClientsAddFavoriteProductCommand('019704cc-11ec-766e-b002-78a6ea0cbedf', id_products, []);
+
+    productRepo.find.mockResolvedValueOnce([mockProduct]);
+    fakeStoreAPI.getProductById.mockResolvedValueOnce({
+      id: 'external-1',
+      image: 'img',
+      title: 'title',
+      price: 10,
+    });
+
+    await handler.execute(command);
+
+    expect(productRepo.find).toHaveBeenCalledWith({
+      select: { id: true },
+      where: { id: expect.any(Object) },
+    });
+    expect(uow.query).toHaveBeenCalled();
+  });
 });
