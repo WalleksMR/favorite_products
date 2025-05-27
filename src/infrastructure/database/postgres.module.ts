@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Scope } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TypeOrmConfigModule } from '@/main/config/typeorm/typeorm.module';
@@ -9,7 +9,7 @@ import { LoggerModule } from '../gateways/logger/logger.module';
 
 @Module({
   imports: [TypeOrmConfigModule, TypeOrmModule.forFeature([PgClient, PgProduct]), LoggerModule],
-  providers: [{ provide: 'IUnitOfWorkTypeORM', useClass: UnitOfWork }],
+  providers: [{ provide: 'IUnitOfWorkTypeORM', scope: Scope.REQUEST, useClass: UnitOfWork }],
   exports: ['IUnitOfWorkTypeORM'],
 })
 export class PostgresModule {}
