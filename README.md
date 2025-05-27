@@ -103,8 +103,13 @@ Siga os passos abaixo para rodar o projeto localmente.
    ```bash
    yarn up:db
    ```
+3. **Rodar as migrations e seed:**
 
-3. **Execute a aplicação:**
+   ```bash
+   yarn seed:run:local
+   ```
+
+4. **Execute a aplicação:**
    ```bash
    yarn local
    ```
